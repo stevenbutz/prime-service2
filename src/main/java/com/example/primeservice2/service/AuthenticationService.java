@@ -1,7 +1,7 @@
 package com.example.primeservice2.service;
 
 import com.example.primeservice2.model.Customer;
-import com.example.primeservice2.repository.IAuthenticationRepository;
+import com.example.primeservice2.repository.AuthenticationDBRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 @Service
 public class AuthenticationService implements IAuthenticationService, UserDetailsService {
-    IAuthenticationRepository authenticationRepository;
-    public AuthenticationService(IAuthenticationRepository authenticationRepository){
+    AuthenticationDBRepository authenticationRepository;
+    public AuthenticationService(AuthenticationDBRepository authenticationRepository){
         this.authenticationRepository = authenticationRepository;
     }
     @Override
-    public boolean register(Customer customer) throws IOException {
+    public Customer register(Customer customer) throws IOException {
         BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
         String passwordEncoded = bc.encode(customer.getPassword());
         customer.setPassword(passwordEncoded);
@@ -37,7 +37,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
                 throw new UsernameNotFoundException("");
             }
             return User.withUsername(username).password(customer.getPassword()).build();
-        } catch(IOException e){
+        } catch(Exception e){
             throw new RuntimeException(e);
         }
     }
