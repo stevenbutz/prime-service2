@@ -1,26 +1,21 @@
 package com.example.primeservice2.model;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.apache.logging.log4j.message.AsynchronouslyFormattable;
 
 @Table
 @Entity
 public class Customer {
+
+    @Id
     private String username;
     private String password;
-    @Id
-    private Long id;
 
-    public Customer(){
-
+    public String getUsername() {
+        return username;
     }
-    public Customer(String username, String password){
-        this.username = username;
-        this.password = password;
-    }
-    public String getUsername(){return username;}
 
     public void setUsername(String username) {
         this.username = username;
@@ -34,11 +29,15 @@ public class Customer {
         this.password = password;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Customer(){
+
     }
 
-    public Long getId() {
-        return id;
+    public Customer(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
+
+
 }
+
